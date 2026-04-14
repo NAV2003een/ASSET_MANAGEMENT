@@ -1,10 +1,13 @@
 # ASSET_MANAGEMENT
 
 Asset Management System - SAP BTP RAP Project
+
 Description
+
 This project is a full-stack Asset Management Application built on the SAP ABAP RESTful Programming Model (RAP). It is designed to track the lifecycle of corporate assets—from procurement to decommissioning. The system automatically calculates asset depreciation and age while maintaining a strict audit trail (Maintenance History) for every status change.
 
 Key Features
+
 Automated Financial Math: Real-time calculation of Current Valuation (85%) and Scrap Loss (15%).
 
 Asset Lifecycle Workflow: Managed state transitions (New → In Use → Repair → Scrapped).
@@ -15,7 +18,9 @@ Draft Support: "Save as draft" functionality to prevent data loss during editing
 
 Visual Criticality: Color-coded status indicators (Red/Yellow/Green) for at-a-glance monitoring.
 
+
 Workflow Logic
+
 The application follows a strictly defined business logic flow to ensure data integrity:
 
 Procurement: Asset is created with status New (N).
