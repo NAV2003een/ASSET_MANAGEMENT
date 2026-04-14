@@ -1,0 +1,17 @@
+@Metadata.layer: #CUSTOMER
+annotate view ZI_NK_ASSET_LOG with 
+{
+  @UI.facet: [ { id: 'logItem', type: #IDENTIFICATION_REFERENCE, label: 'Log Details', position: 10 } ]
+
+  @UI.lineItem: [ { position: 10, label: 'Service Date' } ]
+  @UI.identification: [ { position: 10, label: 'Service Date' } ]
+  service_date;
+  
+  @UI.lineItem: [ { position: 20, label: 'Technician Name' } ]
+  @UI.identification: [ { position: 20, label: 'Technician Name' } ]
+  technician;
+  
+  @UI.lineItem: [ { position: 30, label: 'Detailed Notes' } ]
+  @UI.identification: [ { position: 30, label: 'Detailed Notes' } ]
+  service_note;
+}

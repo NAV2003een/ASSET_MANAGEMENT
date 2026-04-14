@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service for Asset Management'
+define service ZUI_NK_ASSET_O4 {
+  expose ZI_NK_ASSET     as Asset;
+  expose ZI_NK_ASSET_LOG as Log;
+}

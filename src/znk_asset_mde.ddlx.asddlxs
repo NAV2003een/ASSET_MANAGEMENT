@@ -1,0 +1,61 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'Asset',
+    typeNamePlural: 'Assets',
+    title: { type: #STANDARD, label: 'Asset Management', value: 'AssetId' }
+  }
+}
+annotate view ZI_NK_ASSET with
+{
+  @UI.facet: [
+    { id: 'idIdentification', type: #IDENTIFICATION_REFERENCE, label: 'Asset Details', position: 10 },
+    { id: 'idLogs', type: #LINEITEM_REFERENCE, label: 'Maintenance History', position: 20, targetElement: '_Logs'}
+  ]
+
+  @UI: { lineItem: [{ position: 10, label: 'Asset ID' }], 
+         identification: [{ position: 10, label: 'Asset ID' }] }
+  AssetId;
+
+  @UI: { lineItem: [{ position: 20, label: 'Description' }], 
+         identification: [{ position: 20, label: 'Description' }] }
+  Description;
+
+  @UI: { lineItem: [{ position: 30, label: 'Category' }], 
+         identification: [{ position: 30, label: 'Category' }] }
+  Category;
+
+  @UI: { lineItem: [{ position: 60, label: 'Age (Days)' }], 
+         identification: [{ position: 60, label: 'Age (Days)' }] }
+  AssetAgeDays;
+
+  @UI: { lineItem: [{ position: 70, label: 'Current Valuation' }], 
+         identification: [{ position: 70, label: 'Current Valuation' }] }
+  CurrentValue;
+  
+  @UI: { lineItem:       [{ position: 50, label: 'Purchase Price' }],
+         identification: [{ position: 50, label: 'Purchase Price' }] }
+  PurchasePrice;
+
+  @UI: { identification: [{ position: 55, label: 'Currency' }] }
+  Currency;
+
+  @UI: { 
+    lineItem: [
+      { position: 90, label: 'Status', criticality: 'StatusCriticality' },
+      { type: #FOR_ACTION, dataAction: 'SetToInUse', label: 'Set to In Use' },
+      { type: #FOR_ACTION, dataAction: 'SendToRepair', label: 'Send to Repair' },
+      { type: #FOR_ACTION, dataAction: 'Decommission', label: 'Decommission' }
+    ],
+    identification: [
+      { position: 90, label: 'Status', criticality: 'StatusCriticality' },
+      { type: #FOR_ACTION, dataAction: 'SetToInUse', label: 'Set to In Use' },
+      { type: #FOR_ACTION, dataAction: 'SendToRepair', label: 'Send to Repair' },
+      { type: #FOR_ACTION, dataAction: 'Decommission', label: 'Decommission' }
+    ]
+  }
+  OverallStatus;
+
+  @UI.hidden: true
+  StatusCriticality;
+}

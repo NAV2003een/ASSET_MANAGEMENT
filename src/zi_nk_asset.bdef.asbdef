@@ -1,0 +1,76 @@
+managed implementation in class zbp_i_nk_asset unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_NK_ASSET alias Asset
+persistent table znk_asset_hdr
+draft table znk_asset_draft
+lock master
+total etag last_changed_at
+authorization master ( global )
+{
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  association _Logs { create; with draft; }
+
+  field ( numbering : managed, readonly ) asset_uuid;
+
+  // KEY FIX: Add every calculated field here to prevent Draft Persistency errors
+  field ( readonly ) OverallStatus, CurrentValue, AssetAgeDays, StatusCriticality, ScrapLossAmount;
+
+  field ( mandatory ) PurchasePrice, Currency;
+
+  validation validatePurchaseDate on save { create; field PurchaseDate; }
+
+  determination calculateValuation on save { create; field PurchasePrice; }
+
+  determination SetInitialStatus on modify { create; }
+
+  action ( features : instance ) SetToInUse result [1] $self;
+  action ( features : instance ) SendToRepair result [1] $self;
+  action ( features : instance ) Decommission result [1] $self;
+
+  mapping for znk_asset_hdr
+  {
+    asset_uuid      = asset_uuid;
+    AssetId         = asset_id;
+    Description     = description;
+    Category        = category;
+    PurchaseDate    = purchase_date;
+    PurchasePrice   = purchase_price;
+    Currency        = currency;
+    OverallStatus   = overall_status;
+    last_changed_at = last_changed_at;
+  }
+}
+
+define behavior for ZI_NK_ASSET_LOG alias Log
+persistent table znk_asset_log
+draft table znk_log_draft
+lock dependent by _Asset
+authorization dependent by _Asset
+{
+  update;
+  delete;
+  association _Asset { with draft; }
+
+  field ( numbering : managed, readonly ) log_uuid;
+  field ( readonly ) asset_uuid;
+
+  mapping for znk_asset_log
+  {
+    log_uuid     = log_uuid;
+    asset_uuid   = asset_uuid;
+    service_date = service_date;
+    technician   = technician;
+    service_note = service_note;
+  }
+}
